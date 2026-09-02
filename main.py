@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from netsentry.monitor import get_alerts, get_network_stats, get_system_stats
+from monitor import get_alerts, get_network_stats, get_system_stats
 
 app = FastAPI(title="netsentry", version="0.1.0")
 
