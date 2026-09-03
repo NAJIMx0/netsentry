@@ -25,3 +25,15 @@ jobs:
 
       - name: Run tests
         run: pytest -v
+
+  sast:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Semgrep
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: p/security-audit
