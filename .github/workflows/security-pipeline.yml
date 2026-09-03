@@ -37,3 +37,14 @@ jobs:
         uses: semgrep/semgrep-action@v1
         with:
           config: p/security-audit
+          
+  dependency-scan:
+    runs-on: ubuntu-latest
+    needs: sast
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run pip-audit
+        run: |
+          pip install pip-audit
+          pip-audit -r requirements.txt
