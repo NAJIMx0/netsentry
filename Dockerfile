@@ -5,13 +5,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --target=/build/deps -r requirements.txt
 
 # ---- runtime ----
-FROM python:3.12-slim AS runtime
-RUN useradd --uid 10001 --no-create-home --shell /usr/sbin/nologin appuser
+FROM gcr.io/distroless/python3-debian12:nonroot AS runtime
 WORKDIR /app
-COPY --from=builder /build/deps /usr/local/lib/python3.12/site-packages
+COPY --from=builder /build/deps /usr/lib/python3.11/site-packages
 COPY main.py monitor.py ./
-USER appuser
 EXPOSE 8000
-
-# Start the application using Uvicorn
-CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Use the non-root user provided by the distroless image
+CMD ["-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
