@@ -16,3 +16,11 @@ jobs:
           python-version: '3.12'
       - run: pip install -r requirements.txt -r requirements-dev.txt
       - run: pytest -v
+  sast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Semgrep scan
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: p/security-audit
