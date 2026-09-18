@@ -33,3 +33,11 @@ jobs:
           python-version: '3.12'
       - run: pip install pip-audit
       - run: pip-audit -r requirements.txt
+  dockerfile-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
