@@ -58,4 +58,18 @@ jobs:
         with:
           name: netsentry-image
           path: netsentry-image.tar
-          
+  image-scan:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: netsentry-image
+
+      - name: Trivy scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          input: netsentry-image.tar
+          severity: HIGH,CRITICAL
+          exit-code: '1'          
