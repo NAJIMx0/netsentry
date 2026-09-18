@@ -51,7 +51,7 @@ jobs:
         run: |
           buildah bud -t netsentry:${{ github.sha }} .
           buildah push netsentry:${{ github.sha }} \
-            oci-archive:netsentry-image.tar
+            docker-archive:netsentry-image.tar
 
       - name: Upload image artifact
         uses: actions/upload-artifact@v4
